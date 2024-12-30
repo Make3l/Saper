@@ -10,14 +10,12 @@
 #define MINE '@'
 #define EMPTY ' '
 #define FLAG '&'
-#define TYLE '#'
+#define TILE '#'
 #define WALLS '*'
 
-int X ,Y; 
+int X ,Y;
 
-void gameInit(int gameType);
-void gameInitUnique(int x, int y); // Custom grid
-
+void initSize(int difLevel);
 int checkAround(char *map, int y, int x);
 void setFields(char *map);
 char *getMap(int mines, int y, int x);

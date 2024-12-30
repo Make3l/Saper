@@ -1,28 +1,32 @@
 #include "logic.h"
 
-void gameInit(int gameType)
+void initSize(int difLevel)
 {
-    if (gameType == 0)
+    switch(difLevel)
     {
-        X = 9;
-        Y = 9;
-    }
-    else if (gameType == 1)
-    {
-        X = 16;
-        Y = 16;
-    }
-    else if (gameType == 2)
-    {
-        X = 16;
-        Y = 30;
-    }
-}
+        case 1:
+            X=9;
+            Y=9;
+        break;
 
-void gameInitUnique(int x, int y)
-{ // custom grid
-    X = x;
-    Y = y;
+        case 2:
+            X=16;
+            Y=16;
+        break;
+
+        case 3:
+            X=16;
+            Y=30;
+        break;
+        case 4:
+            printf("Enter custom map lenght and width");
+            scanf("%d %d",&X,&Y);
+        break;
+
+        default:
+            fprintf(stderr,"Entered wrong level");
+        break;
+    }
 }
 
 int checkAround(char *map, int y, int x)
@@ -99,7 +103,7 @@ char *getMap(int mines, int y, int x)
 char *getUserMap(char *map, int y, int x)
 {
     char *userMap = calloc(X * Y, sizeof(char)); // Initialize map to zeros
-    memset(userMap, TYLE, X * Y);
+    memset(userMap, TILE, X * Y);
 
     for (int i = -1; i <= 1; i++)
     {
