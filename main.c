@@ -19,7 +19,7 @@ int main()
 
 
 
-    map = getMap(X * Y * 0.15, y, x);
+    map = getMap(gameType < 3 ? X * Y * 0.15 : X * Y * 0.20, y, x);
     userMap = getUserMap(map, y, x);
     show(userMap);
 
