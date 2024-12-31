@@ -2,29 +2,29 @@
 
 void initSize(int difLevel)
 {
-    switch(difLevel)
+    switch (difLevel)
     {
-        case 1:
-            X=9;
-            Y=9;
+    case 1:
+        X = 9;
+        Y = 9;
         break;
 
-        case 2:
-            X=16;
-            Y=16;
+    case 2:
+        X = 16;
+        Y = 16;
         break;
 
-        case 3:
-            X=16;
-            Y=30;
+    case 3:
+        X = 16;
+        Y = 30;
         break;
-        case 4:
-            printf("Enter custom map lenght and width");
-            scanf("%d %d",&X,&Y);
+    case 4:
+        printf("Enter custom map lenght and width");
+        scanf("%d %d", &X, &Y);
         break;
 
-        default:
-            fprintf(stderr,"Entered wrong level");
+    default:
+        fprintf(stderr, "Entered wrong level");
         break;
     }
 }
@@ -128,9 +128,10 @@ char *getUserMap(char *map, int y, int x)
 
 void show(char *map)
 {
+    printf("  ");
     for (int i = 0; i < X + 2; i++)
     {
-        printf("%c ",WALLS);
+        printf("%c ", WALLS);
     }
     printf("\n");
 
@@ -139,18 +140,28 @@ void show(char *map)
         for (int x = 0; x < Y; x++)
         {
             if (x == 0)
-               printf("%c ",WALLS);
+                printf("%d %c ", y, WALLS);
             printf("%c ", map[y * Y + x]);
             if (x == Y - 1)
-                printf("%c ",WALLS);
+                printf("%c ", WALLS);
         }
         printf("\n");
     }
+
+    printf("  ");
+
     for (int i = 0; i < X + 2; i++)
     {
-        printf("%c ",WALLS);
+        printf("%c ", WALLS);
     }
-    printf("\n");
+    printf("\n    ");
+
+    for (int i = 0; i < X; i++)
+    {
+        printf("%d ", i);
+    }
+
+    printf("\n\n");
 }
 
 void swapValues(char *map, char *userMap, int y, int x)
