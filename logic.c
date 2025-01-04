@@ -19,7 +19,7 @@ void initSize(int difLevel)
         Y = 30;
         break;
     case 4:
-        printf("Enter custom map lenght and width");
+        printf("Enter custom map lenght and width: ");
         scanf("%d %d", &X, &Y);
         break;
 
@@ -100,10 +100,23 @@ char *getMap(int mines, int y, int x)
     return map;
 }
 
+char *initMap()
+{
+    char *map = calloc(X * Y, sizeof(char)); // Initialize map to zeros
+
+    if (!map)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+
+    memset(map, TILE, X * Y);
+    return map;
+}
+
 char *getUserMap(char *map, int y, int x)
 {
-    char *userMap = calloc(X * Y, sizeof(char)); // Initialize map to zeros
-    memset(userMap, TILE, X * Y);
+    char *userMap = initMap();
 
     for (int i = -1; i <= 1; i++)
     {
@@ -129,7 +142,7 @@ char *getUserMap(char *map, int y, int x)
 void show(char *map)
 {
     printf("  ");
-    for (int i = 0; i < X + 2; i++)
+    for (int i = 0; i < Y + 2; i++)
     {
         printf("%c ", WALLS);
     }
@@ -150,13 +163,13 @@ void show(char *map)
 
     printf("  ");
 
-    for (int i = 0; i < X + 2; i++)
+    for (int i = 0; i < Y + 2; i++)
     {
         printf("%c ", WALLS);
     }
     printf("\n    ");
 
-    for (int i = 0; i < X; i++)
+    for (int i = 0; i < Y; i++)
     {
         printf("%d ", i);
     }
