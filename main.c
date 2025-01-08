@@ -2,7 +2,7 @@
 
 int main()
 {
-    int difLevel = 1, x = 5, y = 5, counter = 0;
+    int difLevel = 1, y = 5, x = 5, counter = 0;
     char input;
     int gameOver = 0;
 
@@ -26,20 +26,20 @@ int main()
     printf("Give me start input: ");
     scanf("%d %d", &x, &y);
 
-    if (x < 0 || y < 0 || x >= Y || y >= X)
+    if (y < 0 || x < 0 || y >= X || x >= Y)
         return -1;
 
-    map = getMap(difLevel < 3 ? X * Y * 0.15 : X * Y * 0.20, y, x);
-    userMap = getUserMap(map, y, x);
+    map = getMap(difLevel < 3 ? Y * Y * 0.15 : Y * Y * 0.20, x, y);
+    userMap = getUserMap(map, x, y);
     show(userMap);
 
-    counter = 9 - checkAround(map, y, x);
+    counter = 9 - checkAround(map, x, y);
 
     while (!gameOver)
     {
         printf("Your score: %d\n", counter);
-        printf("Give me your move (f/r x y): ");
-        if (scanf(" %c %d %d", &input, &x, &y) != 3 || (x < 0 || y < 0 || x >= Y || y >= X))
+        printf("Give me your move (f/r y x): ");
+        if (scanf(" %c %d %d", &input, &x, &y) != 3 || (y < 0 || x < 0 || y >= Y || x >= Y))
         {
             printf("\n Invalid input. Please enter a character followed by two integers.\n");
             continue;
@@ -48,26 +48,26 @@ int main()
         switch (input)
         {
         case 'f':
-            if (userMap[y * Y + x] == TILE)
+            if (userMap[x * Y + y] == TILE)
             {
-                setValue(userMap, y, x, FLAG);
+                setValue(userMap, x, y, FLAG);
             }
             break;
 
         case 'r':
-            if (userMap[y * Y + x] == FLAG)
+            if (userMap[x * Y + y] == FLAG)
             {
-                setValue(userMap, y, x, TILE);
+                setValue(userMap, x, y, TILE);
             }
-            else if (map[y * Y + x] == MINE)
+            else if (map[x * Y + y] == MINE)
             {
                 gameOver = 1;
                 continue;
             }
-            else if (userMap[y * Y + x] == TILE)
+            else if (userMap[x * Y + y] == TILE)
             {
                 counter++;
-                swapValues(map, userMap, y, x);
+                swapValues(map, userMap, x, y);
             }
             break;
 
@@ -82,7 +82,7 @@ int main()
         printf("\n");
         show(map);
         printf("\n");
-        if (counter >= Y * X - (difLevel < 3 ? X * Y * 0.15 : X * Y * 0.20)) // jeszcze - puste pola aaa i mozna boostowac wynik zakladajasz sztuczne flagi
+        if (counter >= Y * Y - (difLevel < 3 ? Y * Y * 0.15 : Y * Y * 0.20)) // jeszcze - puste pola aaa i mozna boostowac wynik zakladajasz sztuczne flagi
             gameOver = 1;
     }
     if(!gameOver)

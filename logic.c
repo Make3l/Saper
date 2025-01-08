@@ -5,22 +5,22 @@ void initSize(int difLevel)
     switch (difLevel)
     {
     case 1:
-        X = 9;
         Y = 9;
+        X = 9;
         break;
 
     case 2:
-        X = 16;
         Y = 16;
+        X = 16;
         break;
 
     case 3:
-        X = 16;
-        Y = 30;
+        Y = 16;
+        X = 30;
         break;
     case 4:
         printf("Enter custom map lenght and width: ");
-        scanf("%d %d", &X, &Y);
+        scanf("%d %d", &Y, &X);
         break;
 
     default:
@@ -29,7 +29,7 @@ void initSize(int difLevel)
     }
 }
 
-int checkAround(char *map, int y, int x)
+int checkAround(char *map, int x, int y)
 {
     int live_neighbors = 0;
 
@@ -40,11 +40,11 @@ int checkAround(char *map, int y, int x)
             if (i == 0 && j == 0) // Skip the current cell
                 continue;
 
-            int ny = y + i;
-            int nx = x + j;
+            int ny = x + i;
+            int nx = y + j;
 
             // Check bounds and count mines
-            if (nx >= 0 && nx < Y && ny >= 0 && ny < X && map[ny * Y + nx] == MINE)
+            if (nx >= 0 && nx < X && ny >= 0 && ny < Y && map[ny * X + nx] == MINE)
             {
                 live_neighbors++;
             }
@@ -56,23 +56,23 @@ int checkAround(char *map, int y, int x)
 
 void setFields(char *map)
 {
-    for (int y = 0; y < X; y++)
+    for (int x = 0; x < Y; x++)
     {
-        for (int x = 0; x < Y; x++)
+        for (int y = 0; y < X; y++)
         {
-            if (map[y * Y + x] != MINE)
+            if (map[x * X + y] != MINE)
             {
-                map[y * Y + x] = '0' + checkAround(map, y, x); // Store as char
-                if (map[y * Y + x] == '0')
-                    map[y * Y + x] = EMPTY;
+                map[x * X + y] = '0' + checkAround(map, x, y); // Store as char
+                if (map[x * X + y] == '0')
+                    map[x * X + y] = EMPTY;
             }
         }
     }
 }
 
-char *getMap(int mines, int y, int x)
+char *getMap(int mines, int x, int y)
 {
-    char *map = calloc(X * Y, sizeof(char)); // Initialize map to zeros
+    char *map = calloc(Y * X, sizeof(char)); // Initialize map to zeros
 
     if (!map)
     {
@@ -83,9 +83,9 @@ char *getMap(int mines, int y, int x)
 
     for (int i = 0; i < mines; i++)
     {
-        int temp = rand() % (X * Y); // Ensure within bounds
+        int temp = rand() % (Y * X); // Ensure within bounds
 
-        if (map[temp] != MINE && temp != y * Y + x)
+        if (map[temp] != MINE && temp != x * X + y)
         {
             map[temp] = MINE;
         }
@@ -102,7 +102,7 @@ char *getMap(int mines, int y, int x)
 
 char *initMap()
 {
-    char *map = calloc(X * Y, sizeof(char)); // Initialize map to zeros
+    char *map = calloc(Y * X, sizeof(char)); // Initialize map to zeros
 
     if (!map)
     {
@@ -110,11 +110,11 @@ char *initMap()
         return NULL;
     }
 
-    memset(map, TILE, X * Y);
+    memset(map, TILE, Y * X);
     return map;
 }
 
-char *getUserMap(char *map, int y, int x)
+char *getUserMap(char *map, int x, int y)
 {
     char *userMap = initMap();
 
@@ -125,11 +125,11 @@ char *getUserMap(char *map, int y, int x)
             // if (i == 0 && j == 0) // Skip the current cell
             //     continue;
 
-            int ny = y + i;
-            int nx = x + j;
+            int ny = x + i;
+            int nx = y + j;
 
             // Check bounds and count mines
-            if (nx >= 0 && nx < Y && ny >= 0 && ny < X && map[ny * Y + nx] != MINE)
+            if (nx >= 0 && nx < X && ny >= 0 && ny < Y && map[ny * X + nx] != MINE)
             {
                 swapValues(map, userMap, ny, nx);
             }
@@ -141,48 +141,44 @@ char *getUserMap(char *map, int y, int x)
 
 void show(char *map)
 {
-    printf("  ");
-    for (int i = 0; i < Y + 2; i++)
+    for (int i = 0; i < X+2; i++)
     {
         printf("%c ", WALLS);
     }
     printf("\n");
 
-    for (int y = 0; y < X; y++)
+    for (int x = 0; x < Y; x++)
     {
-        for (int x = 0; x < Y; x++)
+        for (int y = 0; y < X; y++)
         {
-            if (x == 0)
-                printf("%d %c ", y, WALLS);
-            printf("%c ", map[y * Y + x]);
-            if (x == Y - 1)
+            if (y == 0)
+                printf("%c ", WALLS);
+
+            printf("%c ", map[x * X + y]);
+
+            if (y == X - 1)
                 printf("%c ", WALLS);
         }
         printf("\n");
     }
 
-    printf("  ");
 
-    for (int i = 0; i < Y + 2; i++)
+    for (int i = 0; i < X + 2; i++)
     {
         printf("%c ", WALLS);
     }
     printf("\n    ");
 
-    for (int i = 0; i < Y; i++)
-    {
-        printf("%d ", i);
-    }
 
     printf("\n\n");
 }
 
-void swapValues(char *map, char *userMap, int y, int x)
+void swapValues(char *map, char *userMap, int x, int y)
 {
-    userMap[y * Y + x] = map[y * Y + x];
+    userMap[x * X + y] = map[x * X + y];
 }
 
-void setValue(char *userMap, int y, int x, char value)
+void setValue(char *userMap, int x, int y, char value)
 {
-    userMap[y * Y + x] = value;
+    userMap[x * X + y] = value;
 }

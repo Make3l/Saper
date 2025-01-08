@@ -13,16 +13,16 @@
 #define TILE '#'
 #define WALLS '*'
 
-int X, Y;
+int Y, X;//Y-poziomo(kolumny)  X-pionowo(wiersze)
 
 void initSize(int difLevel);
-int checkAround(char *map, int y, int x);
+int checkAround(char *map, int x, int y);
 void setFields(char *map);
-char *getMap(int mines, int y, int x);
+char *getMap(int mines, int x, int y);
 char *initMap(); // Initialize the map for the first display
-char *getUserMap(char *map, int y, int x);
+char *getUserMap(char *map, int x, int y);
 void show(char *map);
-void swapValues(char *map, char *userMap, int y, int x);
-void setValue(char *userMap, int y, int x, char value);
+void swapValues(char *map, char *userMap, int x, int y);
+void setValue(char *userMap, int x, int y, char value);
 
 #endif // MAP_H
