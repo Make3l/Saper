@@ -140,13 +140,13 @@ char *getUserMap(char *map, int x, int y)
             // if (i == 0 && j == 0) // Skip the current cell
             //     continue;
 
-            int ny = x + i;
-            int nx = y + j;
+            int nx = x + i;
+            int ny = y + j;
 
             // Check bounds and count mines
-            if (nx >= 0 && nx < X && ny >= 0 && ny < Y && map[ny * X + nx] != MINE)
+            if (ny >= 0 && ny < X && nx >= 0 && nx < Y && map[nx * X + ny] != MINE)
             {
-                swapValues(map, userMap, ny, nx);
+                swapValues(map, userMap, nx, ny);
             }
         }
     }
