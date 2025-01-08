@@ -70,6 +70,21 @@ void setFields(char *map)
     }
 }
 
+int outsideBox(int tmp,int x,int y)
+{
+    if(tmp>=(x*X+y-X-1) && tmp <=(x*X+y-X+1))//gorna granica
+        return 0;
+
+    if(tmp>=(x*X+y-1) && tmp<=(x*X+y+1))//srodkowa granica
+        return 0;
+
+    if(tmp>=(x*X+y+X-1) && tmp <=(x*X+y+X+1))//dolna granica
+        return 0;
+    
+    return 1;
+
+}
+
 char *getMap(int mines, int x, int y)
 {
     char *map = calloc(Y * X, sizeof(char)); // Initialize map to zeros
@@ -85,7 +100,7 @@ char *getMap(int mines, int x, int y)
     {
         int temp = rand() % (Y * X); // Ensure within bounds
 
-        if (map[temp] != MINE && temp != x * X + y)
+        if (map[temp] != MINE && outsideBox(temp,x,y))
         {
             map[temp] = MINE;
         }

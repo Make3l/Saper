@@ -37,7 +37,7 @@ int main()
 
     while (!gameOver)
     {
-        printf("Your score: %d\n", counter);
+        printf("Your score: %d\n", counter*difLevel);
         printf("Give me your move (f/r y x): ");
         if (scanf(" %c %d %d", &input, &x, &y) != 3 || (y < 0 || x < 0 || y >= Y || x >= Y))
         {

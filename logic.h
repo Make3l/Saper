@@ -20,6 +20,7 @@ int checkAround(char *map, int x, int y);
 void setFields(char *map);
 char *getMap(int mines, int x, int y);
 char *initMap(); // Initialize the map for the first display
+int outsideBox(int tmp,int x,int y);
 char *getUserMap(char *map, int x, int y);
 void show(char *map);
 void swapValues(char *map, char *userMap, int x, int y);
