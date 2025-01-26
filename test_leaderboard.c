@@ -2,7 +2,6 @@
 
 int main()
 {
-    updateBestPlayers("Jan",135);
-
+    updateBestPlayers("Kubaa",140);
     return 0;
 }
