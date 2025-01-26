@@ -1,4 +1,5 @@
 #include "logic.h"
+#include "output.h"
 
 int main(int argc,char **argv)
 {
@@ -130,6 +131,10 @@ int main(int argc,char **argv)
         printf("Game over with score %d\n", counter * difLevel);
     else
         printf("You are a bomb expert, congrats! Game won with score %d\n", counter * difLevel);
+
+    char name[100];
+    printf("Enter your nick:%s",name);
+    updateBestPlayers(name, counter * difLevel);
 
     fclose(in);
     return 0;

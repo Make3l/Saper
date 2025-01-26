@@ -1,5 +1,5 @@
-game: main.o logic.o
-	cc main.o logic.o -o game.out
+game: main.o logic.o output.o
+	cc main.o logic.o output.o -o game.out
 
 file_test: main.o test_logic.o
 	cc main.o test_logic.o -o file_test.out
