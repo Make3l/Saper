@@ -31,7 +31,7 @@ void initSize(int difLevel)
 
 int checkAround(char *map, int x, int y)
 {
-    int live_neighbors = 0;
+    int bombs = 0;
 
     for (int i = -1; i <= 1; i++)
     {
@@ -46,12 +46,37 @@ int checkAround(char *map, int x, int y)
             // Check bounds and count mines
             if (nx >= 0 && nx < X && ny >= 0 && ny < Y && map[ny * X + nx] == MINE)
             {
-                live_neighbors++;
+                bombs++;
             }
         }
     }
 
-    return live_neighbors;
+    return bombs;
+}
+
+int checkFields(char *map, int x, int y)//returns number of fileds(do not count bombs)
+{
+    int fields = 1;//includes one that i am standing on
+
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+            if (i == 0 && j == 0) // Skip the current cell
+                continue;
+
+            int ny = x + i;
+            int nx = y + j;
+
+            // Check bounds and count mines
+            if (nx >= 0 && nx < X && ny >= 0 && ny < Y && map[ny * X + nx] != MINE)
+            {
+                fields++;
+            }
+        }
+    }
+
+    return fields;
 }
 
 void setFields(char *map)
@@ -82,10 +107,9 @@ int outsideBox(int tmp,int x,int y)
         return 0;
     
     return 1;
-
 }
 
-char *getMap(int mines, int x, int y)
+char *getMap(int mines, int x, int y,int ifRand)
 {
     char *map = calloc(Y * X, sizeof(char)); // Initialize map to zeros
 
@@ -94,7 +118,10 @@ char *getMap(int mines, int x, int y)
         fprintf(stderr, "Memory allocation failed\n");
         return NULL;
     }
-    srand(time(NULL));
+    if(ifRand==1)
+        srand(time(NULL));
+    else
+        srand(1);
 
     for (int i = 0; i < mines; i++)
     {

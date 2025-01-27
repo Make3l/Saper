@@ -17,8 +17,9 @@ int Y, X;//Y-poziomo(kolumny)  X-pionowo(wiersze)
 
 void initSize(int difLevel);
 int checkAround(char *map, int x, int y);
+int checkFields(char *map, int x, int y);
 void setFields(char *map);
-char *getMap(int mines, int x, int y);
+char *getMap(int mines, int x, int y,int ifRand);
 char *initMap(); // Initialize the map for the first display
 int outsideBox(int tmp,int x,int y);
 char *getUserMap(char *map, int x, int y);

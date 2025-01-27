@@ -51,25 +51,25 @@ int main(int argc,char **argv)
     }
     else
     {
-    printf("Give me start input: ");
-    scanf("%d %d", &x, &y);
+        printf("Give me start input: ");
+        scanf("%d %d", &x, &y);
     }
 
 
     if (y < 0 || x < 0 || y >= X || x >= Y)
         return -1;
 
-    map = getMap(difLevel < 3 ? Y * Y * 0.15 : Y * Y * 0.20, x, y);
+    map = getMap(difLevel < 3 ? Y * X * 0.15 : Y * X * 0.20, x, y,(gameFromFile==1? 0:1));
     userMap = getUserMap(map, x, y);
     show(userMap);
 
-    counter = 9 - checkAround(map, x, y);//nieprawdziwe gry w rogu zaczynamy gre
+    counter = checkFields(map, x, y);
 
     while (!gameOver)
     {
         if(gameFromFile==1)
         {
-            if (fscanf(in," %c %d %d", &input, &x, &y) != 3 || (y < 0 || x < 0 || y >= Y || x >= Y))
+            if (fscanf(in," %c %d %d", &input, &x, &y) != 3 || (y < 0 || x < 0 || y >= X || x >= Y))
             {
                 printf("\n Invalid input. Please enter a character followed by two integers.\n");
                 continue;
@@ -79,7 +79,7 @@ int main(int argc,char **argv)
         {
             printf("Your score: %d\n", counter*difLevel);
             printf("Give me your move (f/r y x): ");
-            if (scanf(" %c %d %d", &input, &x, &y) != 3 || (y < 0 || x < 0 || y >= Y || x >= Y))
+            if (scanf(" %c %d %d", &input, &x, &y) != 3 || (y < 0 || x < 0 || y >= X || x >= Y))
             {
                 printf("\n Invalid input. Please enter a character followed by two integers.\n");
                 continue;
@@ -90,23 +90,23 @@ int main(int argc,char **argv)
         switch (input)
         {
         case 'f':
-            if (userMap[x * Y + y] == TILE)
+            if (userMap[x * X + y] == TILE)
             {
                 setValue(userMap, x, y, FLAG);
             }
             break;
 
         case 'r':
-            if (userMap[x * Y + y] == FLAG)
+            if (userMap[x * X + y] == FLAG)
             {
                 setValue(userMap, x, y, TILE);
             }
-            else if (map[x * Y + y] == MINE)
+            else if (map[x * X + y] == MINE)
             {
                 gameOver = 1;
                 continue;
             }
-            else if (userMap[x * Y + y] == TILE)
+            else if (userMap[x * X + y] == TILE)
             {
                 counter++;// nie tylko jak jest tile, wiec warunki gry trzeba zmienic troche
                 swapValues(map, userMap, x, y);
@@ -133,7 +133,8 @@ int main(int argc,char **argv)
         printf("You are a bomb expert, congrats! Game won with score %d\n", counter * difLevel);
 
     char name[100];
-    printf("Enter your nick:%s",name);
+    printf("Enter your nick:");
+    scanf("%s",name);
     updateBestPlayers(name, counter * difLevel);
 
     fclose(in);
