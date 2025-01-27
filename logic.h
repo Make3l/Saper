@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <getopt.h>
 
 // Constants
 #define MINE '@'

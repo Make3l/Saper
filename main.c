@@ -12,11 +12,21 @@ int main(int argc,char **argv)
     char *map = NULL;
     char *userMap = NULL;
 
-    if(argc == 3 && strcmp(argv[1],"-f")==0)
-    {
-        in=fopen(argv[2],"r");
-        gameFromFile=1;
-        
+    int opt;
+    while ((opt = getopt(argc, argv, "f:")) != -1) {
+        switch (opt) {
+        case 'f': // Flaga -f z nazwą pliku
+            in = fopen(optarg, "r");
+            if (!in) {
+                perror("Error opening file");
+                return -1;
+            }
+            gameFromFile = 1;
+            break;
+        default: // Nieznana flaga
+            fprintf(stderr, "Usage: %s [-f filename]\n", argv[0]);
+            return -1;
+        }
     }
     
     if(gameFromFile==0)
