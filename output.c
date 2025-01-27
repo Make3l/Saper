@@ -32,18 +32,21 @@ void updateBestPlayers(char *name,int score)
     while(tab[i].points>score && i<5)
     {
         fprintf(leader_board,"%d. %s %d\n",i+1,tab[i].name,tab[i].points);
+        fprintf(stdout,"%d. %s %d\n",i+1,tab[i].name,tab[i].points);
         i++;
     }
-    
+
     if(i<5)
     {
         fprintf(leader_board,"%d. %s %d\n",i+1,name,score);
+        fprintf(stdout,"%d. %s %d\n",i+1,name,score);
         i++;
     }
     
     while(i<5)
     {
         fprintf(leader_board,"%d. %s %d\n",i+1,tab[i].name,tab[i].points);
+        fprintf(stdout,"%d. %s %d\n",i+1,tab[i].name,tab[i].points);
         i++;
     }
 

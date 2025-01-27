@@ -5,7 +5,7 @@ file_test: main.o test_logic.o
 	cc main.o test_logic.o -o file_test.out
 
 leaderboard_test: test_leaderboard.o output.c
-	cc test_leaderboard.o output.c -o leaderboard_test
+	cc test_leaderboard.o output.c -o leaderboard_test.out
 
 main.o: main.c
 	cc -c main.c
