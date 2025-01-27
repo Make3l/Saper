@@ -74,7 +74,7 @@ int main(int argc,char **argv)
     show(userMap);
 
     counter = checkFields(map, x, y);
-
+    int max_points=Y * X - (difLevel < 3 ? X * Y * 0.15 : X * Y * 0.20);
     while (!gameOver)
     {
         if(gameFromFile==1)
@@ -134,14 +134,21 @@ int main(int argc,char **argv)
         printf("\n");
         show(map);
         printf("\n");
-        if (counter >= Y * X - (difLevel < 3 ? X * Y * 0.15 : X * Y * 0.20)) // jeszcze - puste pola aaa i mozna boostowac wynik zakladajasz sztuczne flagi
+        if (counter >= max_points) // jeszcze - puste pola aaa i mozna boostowac wynik zakladajasz sztuczne flagi
             gameOver = 1;
     }
-    if(gameOver==1)
+    if(gameFromFile==1)
+    {
+        printf("%d %d %d",counter, counter * difLevel,counter*difLevel>=max_points?1:0);
+        return 0;
+    }
+        
+    if(counter*difLevel<max_points)
         printf("Game over with score %d\n", counter * difLevel);
     else
         printf("You are a bomb expert, congrats! Game won with score %d\n", counter * difLevel);
-
+    if(gameFromFile==1)
+        printf("Nmber of correct steps:%d\n",counter);
     char name[100];
     printf("Enter your nick:");
     scanf("%s",name);
